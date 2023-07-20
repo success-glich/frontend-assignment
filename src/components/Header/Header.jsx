@@ -1,7 +1,22 @@
 import React, { useEffect, useRef } from "react";
 import "./header.css";
-import { Container, NavLink, Row } from "reactstrap";
+import { NavLink } from "react-router-dom";
+import { Container, Row } from "reactstrap";
 import logo from "../../assets/react.svg";
+const navLinks = [
+  {
+    path: "home",
+    display: "Home",
+  },
+  {
+    path: "products",
+    display: "Products",
+  },
+  {
+    path: "cart",
+    display: "Cart",
+  },
+];
 const Header = () => {
   const headerRef = useRef(null);
   const menuToggle = () => {};
@@ -30,39 +45,29 @@ const Header = () => {
             <div className="logo">
               <img src={logo} alt="logo" />
               <div>
-                <h1>OnlineSore</h1>
+                <h1>OnlineStore</h1>
               </div>
             </div>
             <div className="navigation">
               <ul className="menu">
-                <li className="nav__item">
-                  <NavLink
-                    to="products"
-                    // className={(navClass) => {
-                    //   return navClass.isActive ? "nav__active" : "";
-                    // }}
-                    className="nav__active"
-                  >
-                    Products
-                  </NavLink>
-                </li>
-                <li className="nav__item">
-                  <NavLink
-                    to="home"
-                    // className={(navClass) => {
-                    //   return navClass.isActive ? "nav__active" : "";
-                    // }}
-                    className=""
-                  >
-                    Home
-                  </NavLink>
-                </li>
+                {navLinks.map((item, index) => (
+                  <li className="nav__item" key={index}>
+                    <NavLink
+                      to={item.path}
+                      className={(navClass) =>
+                        navClass.isActive ? "nav__active" : ""
+                      }
+                    >
+                      {item.display}
+                    </NavLink>
+                  </li>
+                ))}
               </ul>
             </div>
             <div className="nav__icons">
               <span className="cart__icon" onClick={navigateToCart}>
                 <i className="ri-shopping-bag-line"></i>
-                <span className="badge">2</span>
+                <span className="badged">2</span>
               </span>
             </div>
             <div className="mobile__menu">

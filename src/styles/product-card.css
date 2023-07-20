@@ -7,6 +7,10 @@
     font-weight: 600;
     margin-top:15px;
 }
+.product__img img{
+    height: 200px !important;
+    width: 200px !important;
+}
 .product__info a:hover{
     color:inherit;
 }

@@ -4,12 +4,7 @@ import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
 
 import { Link } from "react-router-dom";
 import logo from "../../assets/react.svg";
-const topCategories = [
-  "electronics",
-  "jewelery",
-  "men's clothing",
-  "women's clothing",
-];
+import topCategories from "../../assets/data/categoriesData";
 const Footer = () => {
   const year = new Date().getFullYear();
   return (
