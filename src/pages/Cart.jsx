@@ -12,8 +12,30 @@ const Cart = () => {
   const dispatch = useDispatch();
   const { totalAmount, cartItems } = useSelector((state) => state.cart);
   const removeProductFromCart = (id) => {
-    dispatch(removeItem(id));
-    toast.success("Product removed from cart successfully!");
+    toast.info(
+      <div>
+        Are you sure you want to delete this product from the cart?
+        <div className="d-flex justify-content-end mt-3">
+          <button
+            className="btn btn-danger mx-2"
+            onClick={() => {
+              dispatch(removeItem(id));
+              toast.success("Product removed from cart successfully");
+            }}
+          >
+            Yes
+          </button>
+          <button className="btn btn-secondary" onClick={toast.dismiss}>
+            No
+          </button>
+        </div>
+      </div>,
+      {
+        position: "top-center",
+        autoClose: false,
+        closeButton: false,
+      }
+    );
   };
   return (
     <Helmet title="cart">
@@ -37,50 +59,61 @@ const Cart = () => {
                   </thead>
                   <tbody>
                     {cartItems.map((item, index) => (
-                      <tr key={index}>
-                        <td>
-                          <img src={item.imgUrl} alt="product" />
-                        </td>
-                        <td>{item.productName}</td>
-                        <td>Rs.{item.price.toFixed(2)}</td>
-                        <td>{item.quantity}pc</td>
-                        <td>
-                          <motion.i
-                            onClick={() => removeProductFromCart(item.id)}
-                            whileTap={{ scale: 1.2 }}
-                            className="ri-delete-bin-line delete__btn"
-                          ></motion.i>
-                        </td>
-                      </tr>
+                      <ProductRow
+                        key={index}
+                        item={item}
+                        removeProductFromCart={removeProductFromCart}
+                      />
                     ))}
                   </tbody>
                 </table>
               )}
             </Col>
-            <Col lg="3">
-              <div>
-                <h6 className="d-flex align-items-center justify-content-between">
-                  Subtotal
-                  <span className="fs-4 fw-bold">
-                    Rs.{totalAmount.toFixed(2)}
-                  </span>
-                </h6>
-              </div>
-              <p className="fs-6 mt-2">
-                Taxes and shopping will calculate in checkout
-              </p>
-              <div>
-                <button className="shop__btn w-100">Checkout</button>
-                <button className="shop__btn w-100">
-                  <Link to="/products">Continue to Shopping</Link>
-                </button>
-              </div>
-            </Col>
+
+            <CartInfo totalAmount={totalAmount} />
           </Row>
         </Container>
       </section>
     </Helmet>
   );
 };
+const ProductRow = ({ item, removeProductFromCart }) => {
+  return (
+    <tr>
+      <td>
+        <img src={item.imgUrl} alt="product" />
+      </td>
+      <td>{item.productName}</td>
+      <td>Rs.{item.price.toFixed(2)}</td>
+      <td>{item.quantity}pc</td>
+      <td>
+        <motion.i
+          onClick={() => removeProductFromCart(item.id)}
+          whileTap={{ scale: 1.2 }}
+          className="ri-delete-bin-line delete__btn"
+        ></motion.i>
+      </td>
+    </tr>
+  );
+};
 
+const CartInfo = ({ totalAmount }) => {
+  return (
+    <Col lg="3">
+      <div>
+        <h6 className="d-flex align-items-center justify-content-between">
+          Subtotal
+          <span className="fs-4 fw-bold">Rs.{totalAmount.toFixed(2)}</span>
+        </h6>
+      </div>
+      <p className="fs-6 mt-2">Taxes and shopping will calculate in checkout</p>
+      <div>
+        <button className="shop__btn w-100">Checkout</button>
+        <button className="shop__btn w-100">
+          <Link to="/products">Continue to Shopping</Link>
+        </button>
+      </div>
+    </Col>
+  );
+};
 export default Cart;

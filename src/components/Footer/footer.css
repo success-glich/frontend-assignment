@@ -6,7 +6,9 @@
 .footer i{
     color:white
 }
-
+#footer__logo{
+    color:white;
+}
 .footer__text {
     line-height: 30px;
     color: rgba(255, 255, 255, 0.735);

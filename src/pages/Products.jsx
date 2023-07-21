@@ -12,7 +12,7 @@ const Products = () => {
 
   const handleSubmit = () => {
     const searchQuery = inputRef.current.value.toLowerCase().trim();
-    const filteredData = products.filter((item) =>
+    const filteredData = data.filter((item) =>
       item.title.toLowerCase().includes(searchQuery)
     );
     setProducts(filteredData);
@@ -25,9 +25,11 @@ const Products = () => {
       setProducts(data);
     }
   }, [data]);
-
+  if (isError || error) {
+    return <div>Error while fetching products</div>;
+  }
   return (
-    <Helmet title={"products"}>
+    <Helmet title="products">
       <CommonSection title="Products" />
       <section>
         <Container>
@@ -58,6 +60,12 @@ const Products = () => {
         <Container>
           <Row>
             {isLoading && <div>Loading...</div>}
+
+            {products.length == 0 && !isLoading && (
+              <div className="text-center">
+                <strong>Product Not Found</strong>
+              </div>
+            )}
             {products &&
               products.length > 0 &&
               products.map((item) => <ProductCard item={item} key={item.id} />)}

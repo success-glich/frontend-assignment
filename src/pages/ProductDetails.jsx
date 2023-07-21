@@ -12,23 +12,24 @@ import StarRating from "../components/UI/StarRating";
 import { useDispatch } from "react-redux";
 import { addItem } from "../redux/slices/cartSlice";
 import { toast } from "react-toastify";
+import PageNotFound from "./404Page";
 const ProductDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { data, isLoading, error, isError } = userProductById(id);
+  const { data, isLoading, isError } = userProductById(id);
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (isError) {
-    return <div>Error occurred while fetching data</div>;
+  if (isError || !data) {
+    return <PageNotFound title="Product Not Found" />;
   }
 
   const addToCart = () => {
     dispatch(
       addItem({
         id: data.id,
-        image: data.image,
+        imgUrl: data.image,
         productName: data.title,
         price: data.price,
       })
@@ -36,7 +37,7 @@ const ProductDetails = () => {
     toast.success("Product added to cart successfully");
   };
   return (
-    <Helmet title={data.title.slice(0, 7) + "..."}>
+    <Helmet title={data && data.title.slice(0, 7) + "..."}>
       <CommonSection title={data.category} />
       <section className="pt-0">
         <Container>
@@ -52,7 +53,7 @@ const ProductDetails = () => {
               <div className="product__details">
                 <h2>{data.title}</h2>
                 <div className="product__rating d-flex align-items-center gap-5 mb-3">
-                  <StarRating averageRating={data.rating.rate} />
+                  <StarRating averageRating={data && data.rating.rate} />
                   <p>
                     ( <span>{data.rating.count}</span> ratings)
                   </p>
@@ -62,7 +63,7 @@ const ProductDetails = () => {
                 <span className="product__price">Rs{200}</span>
                 <span>Category: {data.category}</span>
               </div>
-              <p className="my-3">{data.description.slice(0, 40) + "..."}</p>
+              <p className="my-3">{data?.description.slice(0, 40) + "..."}</p>
 
               <motion.button
                 whileTap={{ scale: 1.2 }}
@@ -85,10 +86,6 @@ const ProductDetails = () => {
               </div>
             </div>
           </Col>
-          {/* <Col lg="12" className="mt-5">
-            <h2 className="related__title">You might also like</h2>
-            <ProductCard />
-          </Col> */}
         </Row>
       </Container>
     </Helmet>
