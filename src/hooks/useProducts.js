@@ -6,7 +6,7 @@ import {
 } from "../api";
 
 export const useProducts = () => {
-  return useQuery("products", fetchProducts);
+  return useQuery(["products"], fetchProducts);
 };
 
 export const userProductById = (productId) => {

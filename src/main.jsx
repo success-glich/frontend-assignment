@@ -11,6 +11,8 @@ import { store } from "./redux/store.js";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { getItem } from "./redux/slices/cartSlice.js";
+store.dispatch(getItem());
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

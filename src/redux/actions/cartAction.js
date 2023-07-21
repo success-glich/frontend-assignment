@@ -23,4 +23,22 @@ export const addToCard = (state, action) => {
   localStorage.setItem("cart", JSON.stringify(state));
 };
 
-// export const
+export const removeFromCard = (state, action) => {
+  const id = action.payload;
+  const existingItem = state.cartItems.find((item) => item.id === id);
+  if (existingItem) {
+    state.cartItems = state.cartItems.filter((item) => item.id !== id);
+  }
+  localStorage.setItem("cart", JSON.stringify(state));
+};
+
+export const getItemFromLocalStorage = (state) => {
+  const cart = JSON.parse(localStorage.getItem("cart"));
+  if (cart) {
+    state.totalAmount = cart.totalAmount;
+    state.totalQuantity = cart.totalQuantity;
+    cart.cartItems.forEach((item) => {
+      state.cartItems.push(item);
+    });
+  }
+};

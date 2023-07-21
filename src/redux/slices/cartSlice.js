@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addToCard } from "../actions/cartAction";
+import {
+  addToCard,
+  getItemFromLocalStorage,
+  removeFromCard,
+} from "../actions/cartAction";
 const initialState = {
   cartItems: [],
   totalAmount: 0,
@@ -10,8 +14,10 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addItem: addToCard,
+    removeItem: removeFromCard,
+    getItem: getItemFromLocalStorage,
   },
 });
 
 export default cartSlice.reducer;
-export const { addItem } = cartSlice.actions;
+export const { addItem, getItem, removeItem } = cartSlice.actions;

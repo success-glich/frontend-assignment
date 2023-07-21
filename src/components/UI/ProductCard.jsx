@@ -12,7 +12,7 @@ const ProductCard = ({ item }) => {
     dispatch(
       addItem({
         id: item.id,
-        image: item.image,
+        imgUrl: item.image,
         productName: item.title,
         price: item.price,
       })
@@ -36,8 +36,8 @@ const ProductCard = ({ item }) => {
         </div>
         <div className="product__card-button">
           <span className="price">Rs. {item?.price}</span>
-          <span onClick={addToCart}>
-            <i className="ri-add-line"></i>{" "}
+          <span onClick={addToCart} style={{ cursor: "pointer" }}>
+            <i className="ri-add-line c"></i>{" "}
           </span>
         </div>
       </div>

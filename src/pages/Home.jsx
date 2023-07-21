@@ -3,8 +3,7 @@ import Helmet from "../components/Helmet/Helmet";
 import { Col, Container, Row } from "reactstrap";
 import heroImg from "../assets/images/hero-img.png";
 import { Link } from "react-router-dom";
-import { useProductsByCategory } from "../hooks/useProducts";
-import ProductList from "../components/UI/ProductList";
+import CategoriesProduct from "../components/UI/CategoriesProduct";
 import Services from "../services/Services.jsx";
 import topCategories from "../assets/data/categoriesData";
 import { motion } from "framer-motion";
@@ -40,24 +39,7 @@ const Home = () => {
           </Row>
         </Container>
       </section>
-      {/* services */}
       <Services />
-      {/* <section className="trending__products">
-        <Container>
-          <Row>
-            <Col lg="12" className="text-center">
-              <h2 className="section__title">Trending Products</h2>
-            </Col>
-
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-          </Row>
-        </Container>
-      </section> */}
       {topCategories?.map((category) => (
         <section key={category} className="trending__products">
           <Container>
@@ -75,16 +57,6 @@ const Home = () => {
         </section>
       ))}
     </Helmet>
-  );
-};
-const CategoriesProduct = ({ category }) => {
-  const { data, isLoading, error, isError } = useProductsByCategory(category);
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error: {error.message}</div>;
-  return (
-    <>
-      <ProductList data={data} />
-    </>
   );
 };
 
