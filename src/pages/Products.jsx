@@ -9,11 +9,8 @@ const Products = () => {
   const { data, isLoading, error, isError } = useProducts();
   const inputRef = useRef();
   const [products, setProducts] = useState([]);
-  if (isLoading) {
-    console.log("loading...");
-  }
+
   const handleSubmit = () => {
-    console.log(inputRef.current.value);
     const searchQuery = inputRef.current.value.toLowerCase().trim();
     const filteredData = products.filter((item) =>
       item.title.toLowerCase().includes(searchQuery)
@@ -60,6 +57,7 @@ const Products = () => {
       <section>
         <Container>
           <Row>
+            {isLoading && <div>Loading...</div>}
             {products &&
               products.length > 0 &&
               products.map((item) => <ProductCard item={item} key={item.id} />)}

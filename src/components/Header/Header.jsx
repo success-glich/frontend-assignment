@@ -1,30 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./header.css";
-import { NavLink } from "react-router-dom";
-import { Container, Modal, Row, ModalBody } from "reactstrap";
+import { Link, NavLink } from "react-router-dom";
+import { Container, Modal, Row } from "reactstrap";
 import logo from "../../assets/react.svg";
 import { useSelector } from "react-redux";
-const navLinks = [
-  {
-    path: "home",
-    display: "Home",
-  },
-  {
-    path: "products",
-    display: "Products",
-  },
-  {
-    path: "cart",
-    display: "Cart",
-  },
-];
+import navLinks from "../../assets/data/navLinks";
 const Header = () => {
   const headerRef = useRef(null);
   const menuRef = useRef(null);
-
   const menuToggle = () => menuRef.current.classList.toggle("active__menu");
   const { totalQuantity } = useSelector((state) => state.cart);
-  console.log(totalQuantity);
+
   const navigateToCart = () => {};
   const stickyHeaderFunc = () => {
     window.addEventListener("scroll", () => {
@@ -38,9 +24,10 @@ const Header = () => {
       }
     });
   };
-  const [isSideModalOpen, setIsSideModalOpen] = useState(false);
-  const toggleSideModal = () => {
-    setIsSideModalOpen(!isSideModalOpen);
+  const [isBackdropOpen, setIsBackdropOpen] = useState(false);
+
+  const toggleBackdrop = () => {
+    setIsBackdropOpen(!isBackdropOpen);
   };
   useEffect(() => {
     stickyHeaderFunc();
@@ -54,7 +41,9 @@ const Header = () => {
             <div className="logo">
               <img src={logo} alt="logo" />
               <div>
-                <h1>OnlineStore</h1>
+                <h1>
+                  <Link to="/">OnlineStore</Link>
+                </h1>
               </div>
             </div>
             <div className="navigation" ref={menuRef} onClick={menuToggle}>
@@ -80,42 +69,16 @@ const Header = () => {
               </span>
             </div>
             <div className="mobile__menu">
-              <span onClick={toggleSideModal}>
+              <span onClick={menuToggle}>
                 <i className="ri-menu-line"></i>
               </span>
             </div>
           </div>
-
-          {/* <Modal
-            isOpen={isSideModalOpen}
-            toggle={toggleSideModal}
-            className="backdrop-modal"
-            contentClassName="side-modal-content"
-          /> */}
           <Modal
-            isOpen={isSideModalOpen}
-            toggle={toggleSideModal}
+            isOpen={isBackdropOpen}
+            toggle={toggleBackdrop}
             className="backdrop-modal"
-            contentClassName="side-modal-content"
-          >
-            <ModalBody>
-              <ul className="side-nav-menu">
-                {navLinks.map((item, index) => (
-                  <li className="nav__item" key={index}>
-                    <NavLink
-                      to={item.path}
-                      className={(navClass) =>
-                        navClass.isActive ? "nav__active" : ""
-                      }
-                      onClick={toggleSideModal}
-                    >
-                      {item.display}
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
-            </ModalBody>
-          </Modal>
+          />
         </Row>
       </Container>
     </header>

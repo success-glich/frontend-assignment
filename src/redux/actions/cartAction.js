@@ -28,6 +28,8 @@ export const removeFromCard = (state, action) => {
   const existingItem = state.cartItems.find((item) => item.id === id);
   if (existingItem) {
     state.cartItems = state.cartItems.filter((item) => item.id !== id);
+    state.totalQuantity -= 1;
+    state.totalAmount -= existingItem.price * existingItem.quantity;
   }
   localStorage.setItem("cart", JSON.stringify(state));
 };
