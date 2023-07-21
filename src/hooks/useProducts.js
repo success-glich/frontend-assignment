@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import {
   fetchProducts,
   fetchProductById,
@@ -10,7 +10,7 @@ export const useProducts = () => {
 };
 
 export const userProductById = (productId) => {
-  return useQuery(["products", productId], fetchProductById(productId));
+  return useQuery(["products", productId], () => fetchProductById(productId));
 };
 
 export const useProductsByCategory = (category) => {

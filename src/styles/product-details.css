@@ -1,0 +1,38 @@
+.product__details{
+    margin-top:50px;
+    > h2{
+        font-size:1.8rem;
+        margin-bottom: 10px;
+    }
+
+}
+.ratings__star{
+    >span >i{
+        color:coral;
+    }
+}
+.product__rating {
+
+    >p >span{
+        color:coral;
+        font-weight: 500;
+    }
+
+}
+
+
+.product__price {
+    font-style: 1.3rem;
+    font-weight: 500;
+}
+.tab__wrapper {
+    color: var((--primary-color));
+    font-weight: 600;
+flex-direction: column;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.tab__content p {
+    line-height: 30px;
+}
+

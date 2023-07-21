@@ -3,6 +3,7 @@ import "./header.css";
 import { NavLink } from "react-router-dom";
 import { Container, Row } from "reactstrap";
 import logo from "../../assets/react.svg";
+import { useSelector } from "react-redux";
 const navLinks = [
   {
     path: "home",
@@ -20,6 +21,7 @@ const navLinks = [
 const Header = () => {
   const headerRef = useRef(null);
   const menuToggle = () => {};
+  const { totalQuantity } = useSelector((state) => state.cart);
   const navigateToCart = () => {};
   const stickyHeaderFunc = () => {
     window.addEventListener("scroll", () => {
@@ -67,7 +69,7 @@ const Header = () => {
             <div className="nav__icons">
               <span className="cart__icon" onClick={navigateToCart}>
                 <i className="ri-shopping-bag-line"></i>
-                <span className="badged">2</span>
+                <span className="badged">{totalQuantity || 0}</span>
               </span>
             </div>
             <div className="mobile__menu">
